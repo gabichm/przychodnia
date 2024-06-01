@@ -26,4 +26,26 @@ public class PatientContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configure relationships, constraints, etc.
+        modelBuilder.Entity<Patient>()
+            .HasMany(p => p.Appointment)
+            .WithOne(a => a.Patient)
+            .HasForeignKey(a => a.PatientId);
+
+        modelBuilder.Entity<Patient>()
+            .HasMany(p => p.Note)
+            .WithOne(n => n.Patient)
+            .HasForeignKey(n => n.PatientId);
+
+        modelBuilder.Entity<Doctor>()
+            .HasMany(d => d.Appointment)
+            .WithOne(a => a.Doctor)
+            .HasForeignKey(a => a.DoctorId);
+    }
+}
+
 }

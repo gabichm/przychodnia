@@ -126,3 +126,4 @@
 /Users/gabichmielecka/Documents/studia/pz2/11/new/Api/obj/Debug/net8.0/Api.pdb
 /Users/gabichmielecka/Documents/studia/pz2/11/new/Api/obj/Debug/net8.0/Api.genruntimeconfig.cache
 /Users/gabichmielecka/Documents/studia/pz2/11/new/Api/obj/Debug/net8.0/ref/Api.dll
+/Users/gabichmielecka/Documents/studia/pz2/11/new/Api/obj/Debug/net8.0/Api.sourcelink.json
