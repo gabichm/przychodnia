@@ -1,0 +1,41 @@
+@* @page "/doctors" *@
+@* @using Przychodnia.Services; *@
+@* *@
+@* @using Przychodnia.Data; *@
+@* @code { *@
+@*     private List<Doctor> doctors; *@
+@* *@
+@*     protected override async Task OnInitializedAsync() *@
+@*     { *@
+@*         doctors = await ApiService.GetDoctorsAsync(); *@
+@*     }   *@
+@*      *@
+@*      *@
+@* } *@
+@* *@
+@* <h1>Doctors</h1> *@
+@* <table> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <th>Doctor ID</th> *@
+@*         <th>Name</th> *@
+@*         <th>Specialty</th> *@
+@*         <th>Last Name</th> *@
+@*         <th>Phone</th> *@
+@*         <th>Email</th> *@
+@*     </tr> *@
+@*     </thead> *@
+@*     <tbody> *@
+@*     @foreach (var doctor in doctors) *@
+@*     { *@
+@*         <tr> *@
+@*             <td>@doctor.DoctorId</td> *@
+@*             <td>@doctor.Name</td> *@
+@*             <td>@doctor.Specialty</td> *@
+@*             <td>@doctor.LastName</td> *@
+@*             <td>@doctor.Phone</td> *@
+@*             <td>@doctor.Email</td> *@
+@*         </tr> *@
+@*     } *@
+@*     </tbody> *@
+@* </table> *@

@@ -1,7 +1,11 @@
-public class Note
+namespace Api.Data
 {
-    public int NoteId { get; set; }
-    public int AppointmentId { get; set; }
-    public string Summary { get; set; }
-    public string Prescription { get; set;}
+    public class Note
+    {
+        public int NoteId { get; set; }
+        public int AppointmentId { get; set; }
+        public string? Summary { get; set; }
+        public string Prescription { get; set; }
+    }
 }
+
