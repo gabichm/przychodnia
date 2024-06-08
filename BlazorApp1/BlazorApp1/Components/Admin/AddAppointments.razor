@@ -1,0 +1,66 @@
+@page "/admin/appointments"
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "admin")]
+@attribute [StreamRendering]
+@rendermode InteractiveAuto
+
+@inject IAppointmentService AppointmentService
+
+<PageTitle>Appointments</PageTitle>
+
+    <h3>Add Appointment</h3>
+
+    <EditForm Model="appointment" OnSubmit="HandleSubmit">
+        <div>
+            <label for="date">Date</label>
+            <InputText id="date" @bind-Value="appointment.Date" class="form-control" />
+        </div>
+        <div>
+            <label for="time">Time</label>
+            <InputText id="time" @bind-Value="appointment.Time" class="form-control" />
+        </div>
+        <div>
+            <label for="reason">Reason</label>
+            <InputText id="reason" @bind-Value="appointment.Reason" class="form-control" />
+        </div>
+        <div>
+            <label for="PatientId">Patient Id</label>
+            <InputNumber id="patientId" @bind-Value="appointment.PatientId" class="form-control" />
+        </div>
+        <div>
+            <label for="doctorId">Doctor Id</label>
+            <InputNumber id="doctorId" @bind-Value="appointment.DoctorId" class="form-control" />
+        </div>
+        <div>
+            <label for="Status">Status</label>
+            <InputText id="status" @bind-Value="appointment.Status" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+
+}
+@code {
+    List<Appointment> appointments = new List<Appointment>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        appointments = await AppointmentService.GetAppointments();
+    }
+    
+    void AddAppointment()
+    {
+        NavigationManager.NavigateTo("/admin/appointment/add");
+    }
+    
+    [Parameter]
+    public int? Id { get; set; }
+    private Appointment appointment = new Appointment();
+    
+    private async Task HandleSubmit()
+    {
+        // Handle form submission
+        Console.WriteLine($"Submitted new appointment for: {appointment.Date} {appointment.Time} {appointment.DoctorId} ");
+    }
+
+}
