@@ -11,7 +11,7 @@
 
     <h3>Add Appointment</h3>
 
-    <EditForm Model="appointment" OnSubmit="HandleSubmit">
+    <EditForm Model="appointments" OnSubmit="HandleSubmit">
         <div>
             <label for="date">Date</label>
             <InputText id="date" @bind-Value="appointment.Date" class="form-control" />
