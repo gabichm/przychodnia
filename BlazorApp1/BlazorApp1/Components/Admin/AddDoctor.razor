@@ -1,22 +1,40 @@
 @page "/admin/doctor/add"
 @page "/admin/addDoctor/{id:int}"
 
-
 <h3>Add Doctor</h3>
 
 <EditForm Model="doctor" OnSubmit="HandleSubmit">
-    <label>Name</label>
-    <InputText @bind-Value="doctor.Name"> @doctor.Name</InputText> />
+    <div>
+        <label for="name">First Name</label>
+        <InputText id="name" @bind-Value="doctor.Name" class="form-control" />
+    </div>
+    <div>
+        <label for="lastName">Last Name</label>
+        <InputText id="lastName" @bind-Value="doctor.LastName" class="form-control" />
+    </div>
+    <div>
+        <label for="specialty">Specialty</label>
+        <InputText id="specialty" @bind-Value="doctor.Specialty" class="form-control" />
+    </div>
+    <div>
+        <label for="phone">Phone</label>
+        <InputText id="phone" @bind-Value="doctor.Phone" class="form-control" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="doctor.Email" class="form-control" />
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {
-
-    Doctor doctor = new Doctor();
+    [Parameter]
+    public int? Id { get; set; }
+    private Doctor doctor = new Doctor();
     
-    async Task HandleSubmit()
-    { 
-        //
+    private async Task HandleSubmit()
+    {
+        // Handle form submission
+        Console.WriteLine($"Submitted: {doctor.Name} {doctor.LastName}, Specialty: {doctor.Specialty}, Phone: {doctor.Phone}, Email: {doctor.Email}");
     }
-
 }

@@ -1,5 +1,7 @@
 @page "/admin/doctors"
+@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "admin")]
 @attribute [StreamRendering]
 @rendermode InteractiveAuto
 
@@ -19,7 +21,32 @@ else if (!doctors.Any())
 }
 else
 {
-<button @onclick="AddDoctor" class="btn btn-primary">Add Doctor</button>
+    @* <button @onclick="AddDoctor" class="btn btn-primary">Add Doctor</button> *@
+    <h3>Add Doctor</h3>
+
+    <EditForm Model="doctor" OnSubmit="HandleSubmit">
+        <div>
+            <label for="name">First Name</label>
+            <InputText id="name" @bind-Value="doctor.Name" class="form-control" />
+        </div>
+        <div>
+            <label for="lastName">Last Name</label>
+            <InputText id="lastName" @bind-Value="doctor.LastName" class="form-control" />
+        </div>
+        <div>
+            <label for="specialty">Specialty</label>
+            <InputText id="specialty" @bind-Value="doctor.Specialty" class="form-control" />
+        </div>
+        <div>
+            <label for="phone">Phone</label>
+            <InputText id="phone" @bind-Value="doctor.Phone" class="form-control" />
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="doctor.Email" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
     <table class="table">
         <thead>
         <tr>
@@ -49,7 +76,17 @@ else
     
     void AddDoctor()
     {
-        NavigationManager.NavigateTo("/admin/doctors/add");
+        NavigationManager.NavigateTo("/admin/doctor/add");
+    }
+    
+    [Parameter]
+    public int? Id { get; set; }
+    private Doctor doctor = new Doctor();
+    
+    private async Task HandleSubmit()
+    {
+        // Handle form submission
+        Console.WriteLine($"Submitted: {doctor.Name} {doctor.LastName}, Specialty: {doctor.Specialty}, Phone: {doctor.Phone}, Email: {doctor.Email}");
     }
 
 }
