@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Identity
 @using BlazorApp1.Data
 @using Microsoft.EntityFrameworkCore
+@using System.Security.Claims // Dodajemy using dla Claims
 @inject NavigationManager NavigationManager
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -40,7 +41,7 @@ else
         {
             <tr>
                 <td>@appointment.Date</td>
-                <td>@doctors.First(d => d.DoctorId == appointment.DoctorId).Name @doctors.First(d => d.DoctorId == appointment.DoctorId).LastName</td>
+                <td>@(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.Name) @(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.LastName)</td>
                 <td><button @onclick="() => ScheduleAppointment(appointment)" class="btn btn-primary">Schedule</button></td>
             </tr>
         }
@@ -50,11 +51,10 @@ else
 
 @code {
     [Parameter]
-    public string speciality { get; set; } = string.Empty;
+    public string speciality { get; set; } = "Cardiology"; // Ustawiamy domyślną wartość specjalizacji na "Cardiology"
 
-    private List<Appointment> appointments = new();
-    private List<Doctor> doctors = new();
-    private ApplicationUser user = default!;
+    private List<Appointment> appointments; // Usuwamy wartość domyślną, ponieważ będzie ona przypisana w OnInitializedAsync()
+    private List<Doctor> doctors;
 
     protected override async Task OnInitializedAsync()
     {
@@ -75,12 +75,16 @@ else
                 .ToList();
         }
     }
+
     private async Task ScheduleAppointment(Appointment appointment)
     {
-        if (user != null)
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
         {
             appointment.Status = "Scheduled";
-            appointment.PatientId = int.TryParse(user.Id, out var userId) ? userId : (int?)null;
+            appointment.PatientId = int.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var userId) ? userId : (int?)null;
             await AppointmentService.UpdateAppointment(appointment);
             NavigationManager.NavigateTo("/Patient/Specialists");
         }
