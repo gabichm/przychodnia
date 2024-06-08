@@ -1,0 +1,58 @@
+@page "/admin/doctor/{DoctorId:int}"
+
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "admin")]
+@attribute [StreamRendering]
+@rendermode InteractiveAuto
+
+@inject IDoctorService DoctorService
+@inject IAppointmentService AppointmentService
+
+<PageTitle>Doctors</PageTitle>
+
+<h3>Doctors</h3>
+
+@if  (appointments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!appointments.Any())
+{
+    <p><em>No appointments under this name</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in appointments)
+        {
+            <tr>
+                <td>@appointment.Date</td>
+                <td>@appointment.Time</td>
+            </tr>
+          }
+                </tbody>
+            </table>
+              
+}
+
+
+@code {
+    [Parameter] public int DoctorId { get; set; }
+    private Doctor doctor = new Doctor();
+    private List<Appointment> appointments = new List<Appointment>();
+    protected override async Task OnInitializedAsync()
+    {
+        doctor = await DoctorService.GetDoctor(DoctorId);
+        var allAppointments = await AppointmentService.GetAppointments();
+        appointments = allAppointments.Where(a => a.DoctorId == DoctorId).ToList();
+        
+    }
+}

@@ -178,6 +178,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BZG1pbi9BZG1pbkRvY3RvcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Admin/AdminOneDoctor.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BZG1pbi9BZG1pbk9uZURvY3Rvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Admin/AdminUsers.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BZG1pbi9BZG1pblVzZXJzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

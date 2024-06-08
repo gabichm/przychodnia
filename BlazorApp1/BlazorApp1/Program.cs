@@ -6,6 +6,7 @@ using BlazorApp1.Components;
 using BlazorApp1.Components.Account;
 using BlazorApp1.Data;
 using BlazorApp1.Services;
+using BlazorApp1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<INoteService, NoteService>();
 
 var app = builder.Build();
 

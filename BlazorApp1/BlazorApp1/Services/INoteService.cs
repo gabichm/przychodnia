@@ -1,7 +1,7 @@
 using BlazorApp1.Models;
 namespace BlazorApp1.Services;
 
-public interface INotesService
+public interface INoteService
 {
     Task<List<Note>> GetNotes();
     Task<Note> GetNote(int id);

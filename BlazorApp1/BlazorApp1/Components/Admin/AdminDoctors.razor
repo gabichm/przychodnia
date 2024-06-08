@@ -50,16 +50,21 @@ else
     <table class="table">
         <thead>
         <tr>
+            
             <th>Name</th>
             <th>LastName</th>
+            <th>Doctors appointments</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var doctor in doctors)
         {
             <tr>
+                
                 <td>@doctor.Name</td>
                 <td>@doctor.LastName</td>
+                @* <td><a href="/admin/doctor/{@doctor.DoctorId}">Subpage</a></td> *@
+                <td>@doctor.DoctorId</td>
             </tr>
         }
         </tbody>
@@ -86,7 +91,7 @@ else
     private async Task HandleSubmit()
     {
         // Handle form submission
-        Console.WriteLine($"Submitted: {doctor.Name} {doctor.LastName}, Specialty: {doctor.Specialty}, Phone: {doctor.Phone}, Email: {doctor.Email}");
+        await DoctorService.AddDoctor(doctor);
     }
 
 }
