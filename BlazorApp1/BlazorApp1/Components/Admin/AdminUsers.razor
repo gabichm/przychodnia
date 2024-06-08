@@ -1,0 +1,55 @@
+@page "/admin/users"
+@inject NavigationManager NavigationManager
+@attribute [StreamRendering]
+@rendermode InteractiveAuto
+
+@inject IUsersService UsersService
+
+<PageTitle>Users</PageTitle>
+
+<h3>Users</h3>
+
+@if  (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!users.Any())
+{
+    <p><em>No users available.</em></p>
+}
+else
+{
+    <button @onclick="AddUser" class="btn btn-primary">Add User</button>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>LastName</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.LastName</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<User> users = new List<User>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        users = await UserService.GetUsers();
+    }
+    
+    void AddUser()
+    {
+        NavigationManager.NavigateTo("/admin/users/add");
+    }
+
+}
