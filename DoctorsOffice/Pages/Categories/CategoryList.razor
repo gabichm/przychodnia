@@ -1,0 +1,46 @@
+@page "/categories"
+
+@inject HttpClient Http
+
+
+
+<h3>List of Categories</h3>
+@if (Doctors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Doctor ID</th>
+            <th>Doctor Name</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Location</th>
+        </tr>
+        @foreach (var doctor in Doctors)
+        {
+            <tr>
+                <td>@doctor.DoctorId</td>
+                <td>@doctor.Name</td>
+                <td>@doctor.Specialty</td>
+                <td>@doctor.LastName</td>
+                <td>@doctor.Email</td>
+            </tr>
+        }
+        </thead>
+    </table>
+}
+
+@code{
+
+    private List<Doctor> Doctors;
+
+    protected override  async Task OnInitializedAsync()
+    {
+        Doctors = await Http.GetFromJsonAsync<List<Doctor>>("api/Doctors");
+    }
+
+}

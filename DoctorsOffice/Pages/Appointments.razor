@@ -1,0 +1,71 @@
+@page "/appointments"
+@inject HttpClient Http
+
+<h3>Available Appointments for Cardiologist</h3>
+
+@if (AvaibleAppointments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (AvaibleAppointments.Count == 0)
+{
+    <p>No available appointments for the selected specialty.</p>
+}
+else
+{
+    <ul>
+        @foreach (var appointment in AvaibleAppointments)
+        {
+            <li>
+                @appointment.Date.ToString() at @appointment.Time.ToString() with @getDoctorName(appointment.DoctorId)
+                <button @onclick="() => ReserveAppointment(appointment.AppointmentId)">Reserve</button>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Appointment> AvaibleAppointments = new List<Appointment>();
+    private List<Doctor> AllDoctors = new List<Doctor>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SpecialistVisit("Cardiology");
+        await LoadDoctors();
+    }
+
+    private async Task SpecialistVisit(string specialty)
+    {
+        var allVisits = await Http.GetFromJsonAsync<List<Appointment>>("api/Appointments");
+        var allDoctors = await Http.GetFromJsonAsync<List<Doctor>>("api/Doctors");
+    
+        AvaibleAppointments = allVisits.Where(visit => 
+            allDoctors.Any(doctor => 
+                doctor.DoctorId == visit.DoctorId && doctor.Specialty.Equals(specialty, StringComparison.OrdinalIgnoreCase))).ToList();
+    }
+
+    private async Task ReserveAppointment(int appointmentId)
+    {
+        int patientId = 1; // Placeholder: Replace with actual patient ID from logged-in user context
+        var response = await Http.PutAsJsonAsync($"api/appointments/reserve/{appointmentId}", new { PatientId = patientId });
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Reload appointments to reflect the change
+            await SpecialistVisit("cardiologist");
+        }
+        else
+        {
+            // Handle reservation failure (e.g., show a message to the user)
+            Console.WriteLine("Failed to reserve appointment.");
+        }
+    }
+    private async Task LoadDoctors()
+    {
+        AllDoctors = await Http.GetFromJsonAsync<List<Doctor>>("api/Doctors");
+    }
+    private string getDoctorName(int doctorId)
+    {
+        return AllDoctors.FirstOrDefault(doctor => doctor.DoctorId == doctorId)?.Name + " " + AllDoctors.FirstOrDefault(doctor => doctor.DoctorId == doctorId)?.LastName;
+    }
+}

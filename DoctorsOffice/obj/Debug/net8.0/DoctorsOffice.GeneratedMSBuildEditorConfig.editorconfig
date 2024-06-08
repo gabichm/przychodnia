@@ -1,0 +1,63 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = DoctorsOffice
+build_property.RootNamespace = DoctorsOffice
+build_property.ProjectDir = /Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice
+build_property._RazorSourceGeneratorDebug = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/Appointments.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/AppointmentsWithSpecialists/Cardiologists.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnRzV2l0aFNwZWNpYWxpc3RzL0NhcmRpb2xvZ2lzdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/Categories/CategoryList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ2F0ZWdvcmllcy9DYXRlZ29yeUxpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvV2VhdGhlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-141tt4vaza
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/DoctorsOffice/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L05hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-nkfam6lgtq
