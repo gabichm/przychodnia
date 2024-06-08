@@ -1,93 +1,110 @@
-@namespace BlazorApp1.Components.Account.Pages.Appointments
-@page "/patient/specialists"
+@page "/Patient/Specialists"
 
-@inject NavigationManager NavigationManager
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using BlazorApp1.Data
+@using Microsoft.EntityFrameworkCore
 @inject UserManager<ApplicationUser> UserManager
-@inject IdentityUserAccessor UserAccessor
-@inject IAppointmentService AppointmentService
 @inject IDoctorService DoctorService
-@attribute [Authorize]
-@attribute [StreamRendering]
-@rendermode InteractiveAuto
 
-<PageTitle>Profile</PageTitle>
+<PageTitle>Specialists</PageTitle>
 
-<h3>Profile</h3>
-<StatusMessage/>
+<h3>Specialists</h3>
 
-@foreach (var speciality in specializations)
-{
-<div class="form-check">
-    <button @onclick='@(e => SeeVisits(speciality))' class="btn btn-primary">@speciality</button>
+<div>
+    <a href="/appointment/Cardiology" class="btn btn-primary">Cardiology</a>
 </div>
-}
-
+<div>
+    <a href="/appointment/Neurology" class="btn btn-primary">Neurology</a>
+</div>
+<div>
+    <a href="/appointment/Dermatology" class="btn btn-primary">Dermatology</a>
+</div>
+<div>
+    <a href="/appointment/Endocrinology" class="btn btn-primary">Endocrinology</a>
+</div>
+<div>
+    <a href="/appointment/GeneralSurgery" class="btn btn-primary">General Surgery</a>
+</div>
+<div>
+    <a href="/appointment/Gynecology" class="btn btn-primary">Gynecology</a>
+</div>
+<div>
+    <a href="/appointment/Oncology" class="btn btn-primary">Oncology</a>
+</div>
+<div>
+    <a href="/appointment/Orthopedics" class="btn btn-primary">Orthopedics</a>
+</div>
+<div>
+    <a href="/appointment/Pediatrics" class="btn btn-primary">Pediatrics</a>
+</div>
+<div>
+    <a href="/appointment/Psychiatry" class="btn btn-primary">Psychiatry</a>
+</div>
+<div>
+    <a href="/appointment/Radiology" class="btn btn-primary">Radiology</a>
+</div>
+<!-- Add other buttons for each specialization -->
 
 @code {
-private ApplicationUser user = default!;
-private string? username;
-private string? phoneNumber;
-private List<string> specializations = new()
-{
-"Cardiology", "Neurology", "Orthopedics", "Pediatrics",
-"Dermatology", "Gynecology", "Radiology", "Psychiatry",
-"Oncology", "Endocrinology", "General Surgery"
-};
-private Dictionary<string, List<Appointment>> specialityAppointments = new();
-
-[CascadingParameter]
-private HttpContext HttpContext { get; set; } = default!;
-
-[SupplyParameterFromForm]
-private InputModel Input { get; set; } = new();
-
-protected override async Task OnInitializedAsync()
-{
-if (HttpContext == null)
-{
-throw new InvalidOperationException("HttpContext is not provided.");
+    // No need for code if you're directly specifying URLs
 }
 
-user = await UserAccessor.GetRequiredUserAsync(HttpContext);
-username = await UserManager.GetUserNameAsync(user);
-phoneNumber = await UserManager.GetPhoneNumberAsync(user);
 
-Input.BirthDate ??= user.BirthDate;
-Input.PhoneNumber ??= phoneNumber;
-}
 
-void SeeVisits(string specialty)
-{
-NavigationManager.NavigateTo($"/appointment/{specialty}");
-}
+@* @page "/patient/specialists" *@
+@* @inject NavigationManager NavigationManager *@
+@* @inject UserManager<ApplicationUser> UserManager *@
+@* @inject AuthenticationStateProvider AuthenticationStateProvider *@
+@* *@
+@* @attribute [Authorize] *@
+@* @attribute [StreamRendering] *@
+@* @rendermode InteractiveAuto *@
+@* *@
+@* <PageTitle>Profile</PageTitle> *@
+@* *@
+@* <h3>Profile</h3> *@
+@* <StatusMessage /> *@
+@* *@
+@* @foreach (var speciality in specializations) *@
+@* { *@
+@*     <div class="form-check"> *@
+@*         <button @onclick="() => SeeVisits(speciality)" class="btn btn-primary">@speciality</button> *@
+@*     </div> *@
+@* } *@
+@* *@
+@* @code { *@
+@*     private ApplicationUser user = default!; *@
+@*     private string? username; *@
+@*     private string? phoneNumber; *@
+@*     private List<string> specializations = new List<string> *@
+@*     { *@
+@*         "Cardiology", "Neurology", "Orthopedics", "Pediatrics", *@
+@*         "Dermatology", "Gynecology", "Radiology", "Psychiatry", *@
+@*         "Oncology", "Endocrinology", "General Surgery" *@
+@*     }; *@
+@* *@
+@*     protected override async Task OnInitializedAsync() *@
+@*     { *@
+@*         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync(); *@
+@*         var principal = authState.User; *@
+@*         user = await UserManager.GetUserAsync(principal); *@
+@*     } *@
+@* *@
+@*     private async Task SeeVisits(string speciality) *@
+@*     { *@
+@*         Console.WriteLine($"Przycisk dla specjalizacji {speciality} został kliknięty."); // Dodajemy komunikat do konsoli przeglądarki. *@
+@*         NavigationManager.NavigateTo($"/appointment/{speciality}"); *@
+@*     } *@
 
-private async Task LoadAppointments(string specialization)
-{
-var doctors = await DoctorService.GetDoctors();
-var doctorIds = doctors.Where(d => d.Specialty == specialization)
-.Select(d => d.DoctorId)
-.ToList();
+@*     // private class InputModel *@
+@*     // { *@
+@*     //     [Phone] *@
+@*     //     [Display(Name = "Phone number")] *@
+@*     //     public string? PhoneNumber { get; set; } *@
+@*     // *@
+@*     //     [Display(Name = "Birth Date")] *@
+@*     //     public DateOnly? BirthDate { get; set; } *@
+@*     // } *@
+@* } *@
 
-var allAppointments = await AppointmentService.GetAppointments();
-var filteredAppointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId)).ToList();
-
-if (filteredAppointments.Any())
-{
-specialityAppointments[specialization] = filteredAppointments;
-}
-else if (specialityAppointments.ContainsKey(specialization))
-{
-specialityAppointments.Remove(specialization);
-}
-}
-
-private sealed class InputModel
-{
-[Phone]
-[Display(Name = "Phone number")]
-public string? PhoneNumber { get; set; }
-
-[Display(Name = "Birth Date")]
-public DateOnly? BirthDate { get; set; }
-}
-}
