@@ -22,6 +22,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FjY2Vzc0RlbmllZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/AppointmentNavig.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9BcHBvaW50bWVudE5hdmlnLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Cardiology.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9DYXJkaW9sb2d5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -40,10 +44,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Gynecology.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9HeW5lY29sb2d5LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Navig.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9OYXZpZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Neurology.razor]
@@ -236,6 +236,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/History/UsersAppointments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9IaXN0b3J5L1VzZXJzQXBwb2ludG1lbnRzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Error.razor]

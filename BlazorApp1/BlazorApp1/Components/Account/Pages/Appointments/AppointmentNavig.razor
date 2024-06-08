@@ -1,0 +1,93 @@
+@namespace BlazorApp1.Components.Account.Pages.Appointments
+@page "/patient/specialists"
+
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IdentityUserAccessor UserAccessor
+@inject IAppointmentService AppointmentService
+@inject IDoctorService DoctorService
+@attribute [Authorize]
+@attribute [StreamRendering]
+@rendermode InteractiveAuto
+
+<PageTitle>Profile</PageTitle>
+
+<h3>Profile</h3>
+<StatusMessage/>
+
+@foreach (var speciality in specializations)
+{
+<div class="form-check">
+    <button @onclick='@(e => SeeVisits(speciality))' class="btn btn-primary">@speciality</button>
+</div>
+}
+
+
+@code {
+private ApplicationUser user = default!;
+private string? username;
+private string? phoneNumber;
+private List<string> specializations = new()
+{
+"Cardiology", "Neurology", "Orthopedics", "Pediatrics",
+"Dermatology", "Gynecology", "Radiology", "Psychiatry",
+"Oncology", "Endocrinology", "General Surgery"
+};
+private Dictionary<string, List<Appointment>> specialityAppointments = new();
+
+[CascadingParameter]
+private HttpContext HttpContext { get; set; } = default!;
+
+[SupplyParameterFromForm]
+private InputModel Input { get; set; } = new();
+
+protected override async Task OnInitializedAsync()
+{
+if (HttpContext == null)
+{
+throw new InvalidOperationException("HttpContext is not provided.");
+}
+
+user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+username = await UserManager.GetUserNameAsync(user);
+phoneNumber = await UserManager.GetPhoneNumberAsync(user);
+
+Input.BirthDate ??= user.BirthDate;
+Input.PhoneNumber ??= phoneNumber;
+}
+
+void SeeVisits(string specialty)
+{
+NavigationManager.NavigateTo($"/appointment/{specialty}");
+}
+
+private async Task LoadAppointments(string specialization)
+{
+var doctors = await DoctorService.GetDoctors();
+var doctorIds = doctors.Where(d => d.Specialty == specialization)
+.Select(d => d.DoctorId)
+.ToList();
+
+var allAppointments = await AppointmentService.GetAppointments();
+var filteredAppointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId)).ToList();
+
+if (filteredAppointments.Any())
+{
+specialityAppointments[specialization] = filteredAppointments;
+}
+else if (specialityAppointments.ContainsKey(specialization))
+{
+specialityAppointments.Remove(specialization);
+}
+}
+
+private sealed class InputModel
+{
+[Phone]
+[Display(Name = "Phone number")]
+public string? PhoneNumber { get; set; }
+
+[Display(Name = "Birth Date")]
+public DateOnly? BirthDate { get; set; }
+}
+}
