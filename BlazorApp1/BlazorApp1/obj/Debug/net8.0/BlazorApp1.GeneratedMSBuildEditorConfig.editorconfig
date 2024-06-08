@@ -22,8 +22,52 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FjY2Vzc0RlbmllZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Cardiology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9DYXJkaW9sb2d5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Dermatology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9EZXJtYXRvbG9neS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Endocrinology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9FbmRvY3Jpbm9sb2d5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/GeneralSurgery.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9HZW5lcmFsU3VyZ2VyeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Gynecology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9HeW5lY29sb2d5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Navig.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9OYXZpZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Neurology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9OZXVyb2xvZ3kucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Oncology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9PbmNvbG9neS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Orthopedics.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9PcnRob3BlZGljcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Pediatrics.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9QZWRpYXRyaWNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Psychiatry.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9Qc3ljaGlhdHJ5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/Appointments/Radiology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FwcG9pbnRtZW50cy9SYWRpb2xvZ3kucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/ConfirmEmail.razor]

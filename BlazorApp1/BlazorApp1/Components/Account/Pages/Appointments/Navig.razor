@@ -4,13 +4,15 @@
 @using Microsoft.AspNetCore.Identity
 @using BlazorApp1.Data
 @using Microsoft.EntityFrameworkCore
-
+@inject NavigationManager NavigationManager
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject IAppointmentService AppointmentService
 @inject IDoctorService DoctorService
+
+@attribute [StreamRendering]
 
 <PageTitle>Profile</PageTitle>
 
@@ -20,21 +22,27 @@
 @foreach (var speciality in specializations)
 {
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="@speciality" id="@speciality" @onchange="@(e => LoadAppointments(speciality, (bool)e.Value))">
-        <label class="form-check-label" for="@speciality">@speciality</label>
-    </div>
+        @* <input class="form-check-input" type="checkbox" value="@speciality" id="@speciality" @onchange="@(e => LoadAppointments(speciality, (bool)e.Value))"> *@
+        @* <label class="form-check-label" for="@speciality">@speciality</label> *@
+        <div class="form-check">
+            <button @onclick='@(e => SeeVisits(speciality))' class="btn btn-primary">@speciality</button>
+        </div>
 
-    @if (specialityAppointments.ContainsKey(speciality))
-    {
-        <ul>
-            @foreach (var appointment in specialityAppointments[speciality])
-            {
-                <li>@appointment.Date</li>
-                <li>@appointment.Time</li>
-            }
-        </ul>
-    }
+    </div>
+    
 }
+
+@foreach (var specialization in specialityAppointments.Keys)
+{
+<h4>@specialization</h4>
+<ul>
+    @foreach (var appointment in specialityAppointments[specialization])
+    {
+    <li>@appointment.Date - @appointment.DoctorId</li>
+    }
+</ul>
+}
+
 
 @code {
     private ApplicationUser user = default!;
@@ -69,6 +77,11 @@
 
         Input.BirthDate ??= user.BirthDate;
         Input.PhoneNumber ??= phoneNumber;
+    }
+
+    void SeeVisits(string specialty)
+    {
+        NavigationManager.NavigateTo($"/appointment/{specialty}");
     }
 
     private async Task LoadAppointments(string specialization, bool isChecked)
