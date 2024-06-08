@@ -59,7 +59,7 @@
     private async Task HandleSubmit()
     {
         // Handle form submission
-        Console.WriteLine($"Submitted new appointment for: {appointment.Date} {appointment.Time} {appointment.DoctorId} ");
+        await AppointmentService.AddAppointment(appointment);
     }
 
 }
