@@ -5,6 +5,7 @@ using BlazorApp1.Client.Pages;
 using BlazorApp1.Components;
 using BlazorApp1.Components.Account;
 using BlazorApp1.Data;
+using BlazorApp1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddScoped<DataSeeder>(); 
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5176/") });
+
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
@@ -39,14 +41,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var seeder = services.GetRequiredService<DataSeeder>();
-    seeder.SeedData();
-}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

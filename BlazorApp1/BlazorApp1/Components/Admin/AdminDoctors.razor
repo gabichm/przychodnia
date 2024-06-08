@@ -1,0 +1,55 @@
+@page "/admin/doctors"
+@inject NavigationManager NavigationManager
+@attribute [StreamRendering]
+@rendermode InteractiveAuto
+
+@inject IDoctorService DoctorService
+
+<PageTitle>Doctors</PageTitle>
+
+<h3>Doctors</h3>
+
+@if  (doctors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!doctors.Any())
+{
+    <p><em>No doctors available.</em></p>
+}
+else
+{
+<button @onclick="AddDoctor" class="btn btn-primary">Add Doctor</button>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>LastName</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var doctor in doctors)
+        {
+            <tr>
+                <td>@doctor.Name</td>
+                <td>@doctor.LastName</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Doctor> doctors = new List<Doctor>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        doctors = await DoctorService.GetDoctors();
+    }
+    
+    void AddDoctor()
+    {
+        NavigationManager.NavigateTo("/admin/doctors/add");
+    }
+
+}

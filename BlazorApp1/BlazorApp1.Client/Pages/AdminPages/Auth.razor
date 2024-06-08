@@ -1,8 +1,9 @@
 ﻿@page "/auth"
-
+@inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Authorization
 
 @attribute [Authorize(Roles = "admin")]
+@attribute [StreamRendering]
 @rendermode InteractiveAuto
 
 <PageTitle>Auth</PageTitle>
@@ -14,7 +15,27 @@
 </AuthorizeView>
 
 <div>
-    <button class="btn btn-primary"><a asp-page="/doctor">Doctors</a></button>
-    <button class="btn btn-primary"><a asp-page="/users">Users</a></button>
-    <button class="btn btn-primary"><a asp-page="/appointments">Appointments</a></button>
+    
+    <button @onclick="SeeDoctors" class="btn btn-primary">Doctors</button>
+    <button @onclick="SeeUsers" class="btn btn-primary">Users</button>
+    <button @onclick="SeeAppointments" class="btn btn-primary">Appointments</button>
 </div>
+
+@code {
+
+    void SeeDoctors()
+    {
+        NavigationManager.NavigateTo("admin/doctors");
+    }
+    void SeeUsers()
+    {
+        NavigationManager.NavigateTo("admin/users");
+    }
+    void SeeAppointments()
+    {
+        NavigationManager.NavigateTo("admin/appointments");
+    }
+
+}
+
+

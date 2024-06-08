@@ -1,0 +1,22 @@
+@page "/admin/doctor/add"
+@page "/admin/addDoctor/{id:int}"
+
+
+<h3>Add Doctor</h3>
+
+<EditForm Model="doctor" OnSubmit="HandleSubmit">
+    <label>Name</label>
+    <InputText @bind-Value="doctor.Name"> @doctor.Name</InputText> />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+
+    Doctor doctor = new Doctor();
+    
+    async Task HandleSubmit()
+    { 
+        //
+    }
+
+}
