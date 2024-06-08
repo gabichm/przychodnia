@@ -1,1 +1,88 @@
-@page ""
+@page "/appointment/Cardiology"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using BlazorApp1.Data
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityUserAccessor UserAccessor
+@inject IdentityRedirectManager RedirectManager
+@inject IAppointmentService AppointmentService
+@inject IDoctorService DoctorService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Appointments for Cardiology</PageTitle>
+
+<h3>Appointments for cardiology</h3>
+
+@if (appointments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!appointments.Any())
+{
+    <p><em>No available appointments.</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var appointment in appointments)
+        {
+            <tr>
+                <td>@appointment.Date</td>
+                <td>@doctors.First(d => d.DoctorId == appointment.DoctorId).Name @doctors.First(d => d.DoctorId == appointment.DoctorId).LastName</td>
+                <td><button @onclick="() => ScheduleAppointment(appointment)" class="btn btn-primary">Schedule</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string speciality { get; set; } = string.Empty;
+
+    private List<Appointment> appointments = new();
+    private List<Doctor> doctors = new();
+    private ApplicationUser user = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var applicationUser = await UserManager.GetUserAsync(user);
+
+            doctors = await DoctorService.GetDoctors();
+            var doctorIds = doctors.Where(d => d.Specialty == speciality)
+                .Select(d => d.DoctorId)
+                .ToList();
+
+            var allAppointments = await AppointmentService.GetAppointments();
+            appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
+                .ToList();
+        }
+    }
+    private async Task ScheduleAppointment(Appointment appointment)
+    {
+        if (user != null)
+        {
+            appointment.Status = "Scheduled";
+            appointment.PatientId = int.TryParse(user.Id, out var userId) ? userId : (int?)null;
+            await AppointmentService.UpdateAppointment(appointment);
+            NavigationManager.NavigateTo("/Patient/Specialists");
+        }
+    }
+}
