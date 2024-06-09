@@ -1,10 +1,5 @@
-@page "/appointment/Cardiology"
+@page "/Appointment/Cardiology"
 
-@using System.ComponentModel.DataAnnotations
-@using Microsoft.AspNetCore.Identity
-@using BlazorApp1.Data
-@using Microsoft.EntityFrameworkCore
-@using System.Security.Claims // Dodajemy using dla Claims
 @inject NavigationManager NavigationManager
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -14,80 +9,94 @@
 @inject IDoctorService DoctorService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
+
 <PageTitle>Appointments for Cardiology</PageTitle>
 
-<h3>Appointments for cardiology</h3>
+<h3>Appointments for Cardiology</h3>
 
-@if (appointments == null)
-{
-    <p><em>Loading...</em></p>
-}
-else if (!appointments.Any())
-{
-    <p><em>No available appointments.</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Doctor</th>
-            <th>Date</th>
-            <th>Time</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var appointment in appointments)
-        {
-            <tr>
-                <td>@appointment.Date</td>
-                <td>@(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.Name) @(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.LastName)</td>
-                <td><button @onclick="() => ScheduleAppointment(appointment)" class="btn btn-primary">Schedule</button></td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
+<AuthorizeView>
+    Hello @context.User.Identity?.Name!
 
+
+@* @if (appointments == null) *@
+@* { *@
+@* <p><em>Loading...</em></p> *@
+@* } *@
+@* else if (!appointments.Any()) *@
+@* { *@
+@* <p><em>No available appointments.</em></p> *@
+@* } *@
+@* else *@
+@* { *@
+@* <table class="table"> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <th>Date</th> *@
+@*         <th>Doctor</th> *@
+@*         <th>Action</th> *@
+@*     </tr> *@
+    @* </thead> *@
+    @* <tbody> *@
+    @* @foreach (var appointment in appointments) *@
+    @* { *@
+    @* var doctor = doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId); *@
+    @* <tr> *@
+        @* <td>@appointment.Date</td> *@
+        @* <td>@(doctor?.Name) @(doctor?.LastName)</td> *@
+        
+
+    @* </tr> *@
+    }
+    @* </tbody> *@
+@* </table> *@
+@* } *@
+</AuthorizeView>
 @code {
-    [Parameter]
-    public string speciality { get; set; } = "Cardiology"; // Ustawiamy domyślną wartość specjalizacji na "Cardiology"
 
-    private List<Appointment> appointments; // Usuwamy wartość domyślną, ponieważ będzie ona przypisana w OnInitializedAsync()
-    private List<Doctor> doctors;
+    private ApplicationUser user = default!;
+    private string Id = default!;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+    
 
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
+    // [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
+public string Speciality { get; set; } = "Cardiology"; // Default specialization
 
-        if (user.Identity.IsAuthenticated)
-        {
-            var applicationUser = await UserManager.GetUserAsync(user);
+// private List<Appointment> appointments = new();
+private List<Doctor> doctors = new();
 
-            doctors = await DoctorService.GetDoctors();
-            var doctorIds = doctors.Where(d => d.Specialty == speciality)
-                .Select(d => d.DoctorId)
-                .ToList();
-
-            var allAppointments = await AppointmentService.GetAppointments();
-            appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
-                .ToList();
-        }
-    }
-
-    private async Task ScheduleAppointment(Appointment appointment)
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity.IsAuthenticated)
-        {
-            appointment.Status = "Scheduled";
-            appointment.PatientId = int.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var userId) ? userId : (int?)null;
-            await AppointmentService.UpdateAppointment(appointment);
-            NavigationManager.NavigateTo("/Patient/Specialists");
-        }
-    }
+protected override async Task OnInitializedAsync()
+{
+    Console.WriteLine(1);
+    user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+    Console.WriteLine(2);
+    Id = user.Id;
+    Console.WriteLine(3);
+    ScheduleAppointment();
+// doctors = await DoctorService.GetDoctors();
+// var doctorIds = doctors.Where(d => d.Specialty == Speciality)
+// .Select(d => d.DoctorId)
+// .ToList();
+//
+// var allAppointments = await AppointmentService.GetAppointments();
+// appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
+// .ToList();
 }
->>>>>>> 8ddf6126acc35ca3501f927e3f48b39bcc9949b7
+
+private async Task ScheduleAppointment(/*Appointment appointment*/)
+{
+    Console.WriteLine("I'm in the ScheduleAppointment method");
+    var Allappointment = await AppointmentService.GetAppointments();
+    var appointment = Allappointment.FirstOrDefault(a => a.Status == "free");
+    appointment.Status = "Scheduled";
+    appointment.PatientId = Id;
+
+if (appointment.PatientId == null)
+{
+await AppointmentService.UpdateAppointment(appointment);
+NavigationManager.NavigateTo("/Patient/Specialists");
+}
+
+}
+
+}
+}
