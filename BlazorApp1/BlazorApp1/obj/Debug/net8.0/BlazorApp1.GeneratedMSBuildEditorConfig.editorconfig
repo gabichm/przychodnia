@@ -94,6 +94,10 @@ build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9BcHBvaW50bWVu
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Appointments/YourAppointments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L0FwcG9pbnRtZW50cy9Zb3VyQXBwb2ludG1lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Account/Pages/AccessDenied.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BY2NvdW50L1BhZ2VzL0FjY2Vzc0RlbmllZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

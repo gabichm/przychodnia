@@ -14,6 +14,7 @@
 @inject IDoctorService DoctorService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
+[Authorize]
 <PageTitle>Your Appointments</PageTitle>
 
 <h3>Current appointments you have scheduled.</h3>
@@ -54,6 +55,7 @@ else
 @code {
     private List<Appointment> patientAppointments;
     private List<Doctor> doctors;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,17 +64,9 @@ else
 
     private async Task LoadAppointmentsAsync()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity.IsAuthenticated)
-        {
-            var applicationUser = await UserManager.GetUserAsync(user);
-            var currentUserId = applicationUser.Id;
-            var allAppointments = await AppointmentService.GetAppointments();
-            patientAppointments = allAppointments.Where(a => a.Status != "free" && a.PatientId == currentUserId).ToList();
-
-        }
+        var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        var allAppointments = await AppointmentService.GetAppointments();
+        patientAppointments = allAppointments.Where(a => a.Status != "free" && a.PatientId == user.Id.ToString()).ToList();
     }
 
 }

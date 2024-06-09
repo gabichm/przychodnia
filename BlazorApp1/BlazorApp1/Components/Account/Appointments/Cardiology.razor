@@ -33,26 +33,26 @@ else
             }
         </tbody>
     </table>
-    <div class="row">
-        <div class="col-md-6">
-            <EditForm Model="Input" FormName="profile" OnValidSubmit="ScheduleAppointment" method="post">
-                <DataAnnotationsValidator/>
-                <ValidationSummary class="text-danger" role="alert"/>
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.Date" class="form-control" placeholder="Please enter desired date."/>
-                    <label for="date" class="form-label">Date</label>
-                    <ValidationMessage For="() => Input.Date" class="text-danger"/>
-                </div>
-                <div class="form-floating mb-3">
-                    <InputDate id="time" @bind-Value="Input.Time" class="form-control" placeholder="Please enter desired time."/>
-                    <label for="date-of-birth" class="form-label">Time</label>
-                    <ValidationMessage For="() => Input.Time" class="text-danger"/>
-                <div class="form-floating mb-3">
-                </div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-            </EditForm>
-        </div>
-    </div>
+    @* <div class="row"> *@
+    @*     <div class="col-md-6"> *@
+    @*         <EditForm Model="Input" FormName="profile" OnValidSubmit="ScheduleAppointment" method="post"> *@
+    @*             <DataAnnotationsValidator/> *@
+    @*             <ValidationSummary class="text-danger" role="alert"/> *@
+    @*             <div class="form-floating mb-3"> *@
+    @*                 <InputText @bind-Value="Input.Date" class="form-control" placeholder="Please enter desired date."/> *@
+    @*                 <label for="date" class="form-label">Date</label> *@
+    @*                 <ValidationMessage For="() => Input.Date" class="text-danger"/> *@
+    @*             </div> *@
+    @*             <div class="form-floating mb-3"> *@
+    @*                 <InputDate id="time" @bind-Value="Input.Time" class="form-control" placeholder="Please enter desired time."/> *@
+    @*                 <label for="date-of-birth" class="form-label">Time</label> *@
+    @*                 <ValidationMessage For="() => Input.Time" class="text-danger"/> *@
+    @*             <div class="form-floating mb-3"> *@
+    @*             </div> *@
+    @*             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button> *@
+    @*         </EditForm> *@
+    @*     </div> *@
+    @* </div> *@
 }
 
 @code {
@@ -98,7 +98,7 @@ protected override async Task  OnInitializedAsync()
         Input.Time ??= firstAppointment?.Time ?? "10";
         Input.Status ??= firstAppointment?.Status ?? "free";
         Input.DoctorId ??= firstAppointment?.DoctorId ?? 1;
-        Input.PatientId ??= user.Id;
+        // Input.PatientId ??= user.Id;
     }
 
 }
@@ -109,9 +109,9 @@ private async Task ScheduleAppointment()
     appointment.Date ??= Input.Date;
     appointment.Time ??= Input.Time;
     appointment.Status ??= "Scheduled";
-    // appointment.AppointmentId =  appointments.FirstOrDefault(a => a.Date == appointment.Date && a.Time == appointment.Time).AppointmentId;
+    appointment.AppointmentId =  appointments.FirstOrDefault(a => a.Date == appointment.Date && a.Time == appointment.Time).AppointmentId;
     appointment.PatientId ??= user.Id;
-    // appointment.DoctorId = 1;
+    appointment.DoctorId = 1;
     try
     {
         if (appointments != null)
