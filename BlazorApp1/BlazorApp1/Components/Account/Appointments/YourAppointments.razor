@@ -1,0 +1,78 @@
+@page "/Patient/YourAppointments"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Identity
+@using BlazorApp1.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Security.Claims
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityUserAccessor UserAccessor
+@inject IdentityRedirectManager RedirectManager
+@inject IAppointmentService AppointmentService
+@inject IDoctorService DoctorService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Your Appointments</PageTitle>
+
+<h3>Current appointments you have scheduled.</h3>
+
+@if (patientAppointments == null)
+{
+    <p>Loading...</p>
+}
+else if (!patientAppointments.Any())
+{
+    <p>No appointments scheduled for this patient.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var appointment in patientAppointments)
+        {
+            <tr>
+                <td>@appointment.Date</td>
+                <td>@appointment.Time</td>
+                <td>@(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.Name) @(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.LastName)</td>
+                <td>@appointment.Status</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Appointment> patientAppointments;
+    private List<Doctor> doctors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAppointmentsAsync();
+    }
+
+    private async Task LoadAppointmentsAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var applicationUser = await UserManager.GetUserAsync(user);
+            var currentUserId = applicationUser.Id;
+            var allAppointments = await AppointmentService.GetAppointments();
+            patientAppointments = allAppointments.Where(a => a.Status != "free" && a.PatientId == currentUserId).ToList();
+
+        }
+    }
+
+}
