@@ -35,6 +35,7 @@ else
             <th>Date</th>
             <th>Time</th>
             <th>Doctor</th>
+            <th>Doctor specialty</th>
             <th>Status</th>
         </tr>
         </thead>
@@ -45,6 +46,7 @@ else
                 <td>@appointment.Date</td>
                 <td>@appointment.Time</td>
                 <td>@(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.Name) @(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.LastName)</td>
+                <td>@(doctors.FirstOrDefault(d => d.DoctorId == appointment.DoctorId)?.Specialty)</td>
                 <td>@appointment.Status</td>
             </tr>
         }
@@ -64,9 +66,10 @@ else
 
     private async Task LoadAppointmentsAsync()
     {
+        doctors = await DoctorService.GetDoctors();
         var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         var allAppointments = await AppointmentService.GetAppointments();
-        patientAppointments = allAppointments.Where(a => a.Status != "free" && a.PatientId == user.Id.ToString()).ToList();
+        patientAppointments = allAppointments.Where(a =>  a.PatientId == user.Id).ToList();
     }
 
 }

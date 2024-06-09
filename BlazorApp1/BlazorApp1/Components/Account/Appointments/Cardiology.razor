@@ -1,3 +1,4 @@
+@page "/schedule-appointment"
 @inject NavigationManager NavigationManager
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -7,162 +8,117 @@
 @inject IDoctorService DoctorService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-
 @if (appointments == null)
 {
-<p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var appointment in appointments)
-            {
-                <tr>
-                    <td>@appointment.Date</td>
-                    <td>@appointment.Time</td>
-                    <td>@appointment.Status</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    @* <div class="row"> *@
-    @*     <div class="col-md-6"> *@
-    @*         <EditForm Model="Input" FormName="profile" OnValidSubmit="ScheduleAppointment" method="post"> *@
-    @*             <DataAnnotationsValidator/> *@
-    @*             <ValidationSummary class="text-danger" role="alert"/> *@
-    @*             <div class="form-floating mb-3"> *@
-    @*                 <InputText @bind-Value="Input.Date" class="form-control" placeholder="Please enter desired date."/> *@
-    @*                 <label for="date" class="form-label">Date</label> *@
-    @*                 <ValidationMessage For="() => Input.Date" class="text-danger"/> *@
-    @*             </div> *@
-    @*             <div class="form-floating mb-3"> *@
-    @*                 <InputDate id="time" @bind-Value="Input.Time" class="form-control" placeholder="Please enter desired time."/> *@
-    @*                 <label for="date-of-birth" class="form-label">Time</label> *@
-    @*                 <ValidationMessage For="() => Input.Time" class="text-danger"/> *@
-    @*             <div class="form-floating mb-3"> *@
-    @*             </div> *@
-    @*             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button> *@
-    @*         </EditForm> *@
-    @*     </div> *@
-    @* </div> *@
+    <EditForm Model="@Input" FormName="appointmentForm" OnValidSubmit=ScheduleAppointment>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <select  value="date" id="date" class="form-control" @onchange = "HandleDateChange">
+                <option value="">Select</option>
+                @foreach (var a in appointments)
+                {
+                    <option value="@a.Date">@a.Date</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="time">Time:</label>
+            <InputSelect id="time" class="form-control" @bind-Value="time">
+                <option value="">Select</option>
+                @foreach (var a in appointments.Where(a => a.Date == Input.Date))
+                {
+                    <option value="@a.Time">@a.Time</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
 }
 
 @code {
-private ApplicationUser user = default!;
-private string Id = default!;
-private Appointment appointment = new();
-public int? appointmentId;
-public string? date;
-public string? time;
-public string? status;
-public int? doctorId;
-public string? patientId;
+    private ApplicationUser user = default!;
+    private Appointment appointment = new();
+    private List<Appointment> appointments = new();
+    private List<Doctor> doctors = new();
+    private string date;
+    private string time;
 
-[CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
-public string Speciality { get; set; } = "Cardiology"; // Default specialization
+    public string Speciality { get; set; } = "Cardiology"; // Default specialization
 
-private List<Appointment> appointments = new();
-private List<Doctor> doctors = new();
-[SupplyParameterFromForm] private InputModel Input { get; set; } = new();
+    [Parameter] public InputModel Input { get; set; } = new();
 
-protected override async Task  OnInitializedAsync()
-{
-
-    doctors = await DoctorService.GetDoctors();
-    var doctorIds = doctors.Where(d => d.Specialty == Speciality)
-        .Select(d => d.DoctorId)
-        .ToList();
-
-    var allAppointments = await appointmentService.GetAppointments();
-    appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
-        .ToList();
-    
-    Console.WriteLine($"ilosc wizyt: {appointments.Count}");
-
-    user = await UserAccessor.GetRequiredUserAsync(HttpContext);
-
-    Console.WriteLine($"{Input.Date}");
-    if (Input.Date == null)
+    protected override async Task OnInitializedAsync()
     {
-        var firstAppointment = appointments.FirstOrDefault();
-        Input.Date ??= firstAppointment?.Date ?? "2024-06-10";
-        Input.Time ??= firstAppointment?.Time ?? "10";
-        Input.Status ??= firstAppointment?.Status ?? "free";
-        Input.DoctorId ??= firstAppointment?.DoctorId ?? 1;
-        // Input.PatientId ??= user.Id;
+        doctors = await DoctorService.GetDoctors();
+        var doctorIds = doctors.Where(d => d.Specialty == Speciality)
+                               .Select(d => d.DoctorId)
+                               .ToList();
+
+        var allAppointments = await appointmentService.GetAppointments();
+        appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
+                                      .ToList();
+
+        Console.WriteLine($"ilosc wizyt: {appointments.Count}");
+
+        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        Input.PatientId = user.Id;
+        // Input.Date
+        // Input.Time;
+        Console.WriteLine($"Data i czas: {Input.Date} {Input.Time}");
     }
 
-}
-
-
-private async Task ScheduleAppointment()
-{
-    appointment.Date ??= Input.Date;
-    appointment.Time ??= Input.Time;
-    appointment.Status ??= "Scheduled";
-    appointment.AppointmentId =  appointments.FirstOrDefault(a => a.Date == appointment.Date && a.Time == appointment.Time).AppointmentId;
-    appointment.PatientId ??= user.Id;
-    appointment.DoctorId = 1;
-    try
+    private async Task ScheduleAppointment()
     {
-        if (appointments != null)
+        Console.WriteLine($"Selected date and time: {date} {time}");
+        try
         {
-            foreach (var a in appointments)
-            {
-                Console.WriteLine($"{a.Date} {a.Time} {a.Status} {a.DoctorId} {a.PatientId}");
-            }
-            Console.WriteLine($"Selected appointment: {appointment.AppointmentId} {appointment.Time} {appointment.Date}");
+            var selectedAppointment = appointments.FirstOrDefault(a => a.Date == Input.Date && a.Time == Input.Time);
 
-            appointment.AppointmentId = appointments.FirstOrDefault(a => a.Date == appointment.Date && a.Time == appointment.Time).AppointmentId;
-            
-            if(appointment != null)
+            if (selectedAppointment != null)
             {
-                
-                
-                    appointment.Status = "Scheduled";
-                    appointment.PatientId = Id;
-                    await appointmentService.UpdateAppointment(appointment);
-                    NavigationManager.NavigateTo("/Patient/Specialists");
-                // }
-                // else
-                // {
-                //     Console.WriteLine("Selected appointment not found.");
-                // }
+                selectedAppointment.Status = "Scheduled";
+                selectedAppointment.PatientId = Input.PatientId;
+
+                await appointmentService.UpdateAppointment(selectedAppointment);
+
+                NavigationManager.NavigateTo("/Patient/Specialists");
             }
             else
             {
                 Console.WriteLine("Selected appointment not found.");
             }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("Appointments list is null.");
+            Console.WriteLine($"Error scheduling appointment: {ex.Message}");
         }
     }
-    catch (Exception ex)
+    public void HandleDateChange(ChangeEventArgs e)
     {
-        Console.WriteLine($"Error scheduling appointment: {ex.Message}");
+        Console.WriteLine($" Costam e={e}");
+        Input.Date = e.Value?.ToString();
     }
-}
 
-private sealed class InputModel
-{
-    public int? AppointmentId { get; set; }
-    public string? Date { get; set; }
-    public string? Time { get; set; }
-    public string? Status { get; set; }
-    public int? DoctorId { get; set; }
-    public string? PatientId { get; set; }
-    
-}
-
+    public class InputModel
+    {
+        public string Date { get; set; } = string.Empty;
+        public string Time { get; set; } = string.Empty;
+        public string? PatientId { get; set; }
+        
+        void HandleDateChange(ChangeEventArgs e)
+        {
+            Date = e.Value?.ToString();
+        }
+    }
 }
