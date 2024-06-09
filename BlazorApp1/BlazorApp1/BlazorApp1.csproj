@@ -24,4 +24,35 @@
       <Compile Remove="Services\IDoctorsService.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\AppointmentNavig.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Cardiology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Dermatology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Endocrinology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\GeneralSurgery.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Gynecology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Neurology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Oncology.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Orthopedics.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Pediatrics.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Psychiatry.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Appointments\Radiology.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Components\Account\Appointments\Cardiology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Dermatology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Endocrinology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\GeneralSurgery.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Gynecology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Neurology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Oncology.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Orthopedics.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Pediatrics.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Psychiatry.razor" />
+      <AdditionalFiles Include="Components\Account\Appointments\Radiology.razor" />
+      <AdditionalFiles Include="Components\Cardiology.razor" />
+      <AdditionalFiles Include="Components\Pages\AppointmentNavig.razor" />
+    </ItemGroup>
+
 </Project>
