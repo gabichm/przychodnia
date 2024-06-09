@@ -11,7 +11,7 @@
 
     <h3>Add Appointment</h3>
 
-    <EditForm Model="appointments" OnSubmit="HandleSubmit">
+    <EditForm Model="appointments" FormName="addAppointment" OnSubmit="HandleSubmit">
         <div>
             <label for="date">Date</label>
             <InputText id="date" @bind-Value="appointment.Date" class="form-control" />
@@ -26,7 +26,7 @@
         </div>
         <div>
             <label for="PatientId">Patient Id</label>
-            <InputNumber id="patientId" @bind-Value="appointment.PatientId" class="form-control" />
+            <InputText id="patientId" @bind-Value="appointment.PatientId" class="form-control" />
         </div>
         <div>
             <label for="doctorId">Doctor Id</label>
@@ -58,6 +58,7 @@
     
     private async Task HandleSubmit()
     {
+        appointment.AppointmentId = "dfsgehrls";
         // Handle form submission
         await AppointmentService.AddAppointment(appointment);
     }

@@ -278,12 +278,52 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9DYXJkaW9sb2d5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Dermatology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9EZXJtYXRvbG9neS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Endocrinology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FbmRvY3Jpbm9sb2d5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/GeneralSurgery.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9HZW5lcmFsU3VyZ2VyeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Gynecology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9HeW5lY29sb2d5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Neurology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9OZXVyb2xvZ3kucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Oncology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9PbmNvbG9neS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Orthopedics.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9PcnRob3BlZGljcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Pediatrics.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9QZWRpYXRyaWNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Psychiatry.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Qc3ljaGlhdHJ5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Radiology.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9SYWRpb2xvZ3kucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/gabichmielecka/Documents/studia/pz2/11/new/BlazorApp1/BlazorApp1/Components/Pages/Weather.razor]

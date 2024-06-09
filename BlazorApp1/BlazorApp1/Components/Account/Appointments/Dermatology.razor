@@ -1,0 +1,124 @@
+
+@inject NavigationManager NavigationManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityUserAccessor UserAccessor
+@inject IdentityRedirectManager RedirectManager
+@inject IAppointmentService appointmentService
+@inject IDoctorService DoctorService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@if (appointments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@Input" FormName="appointmentForm" OnValidSubmit=ScheduleAppointment>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <select  value="date" id="date" class="form-control" @onchange = "HandleDateChange">
+                <option value="">Select</option>
+                @foreach (var a in appointments)
+                {
+                    <option value="@a.Date">@a.Date</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="time">Time:</label>
+            <InputSelect id="time" class="form-control" @bind-Value="time">
+                <option value="">Select</option>
+                @foreach (var a in appointments.Where(a => a.Date == Input.Date))
+                {
+                    <option value="@a.Time">@a.Time</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+}
+
+@code {
+    private ApplicationUser user = default!;
+    private Appointment appointment = new();
+    private List<Appointment> appointments = new();
+    private List<Doctor> doctors = new();
+    private string date;
+    private string time;
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    public string Speciality { get; set; } = "Dermatology"; // Default specialization
+
+    [Parameter] public InputModel Input { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        doctors = await DoctorService.GetDoctors();
+        var doctorIds = doctors.Where(d => d.Specialty == Speciality)
+                               .Select(d => d.DoctorId)
+                               .ToList();
+
+        var allAppointments = await appointmentService.GetAppointments();
+        appointments = allAppointments.Where(a => doctorIds.Contains(a.DoctorId) && a.Status == "free")
+                                      .ToList();
+
+        Console.WriteLine($"ilosc wizyt: {appointments.Count}");
+
+        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        Input.PatientId = user.Id;
+        // Input.Date
+        // Input.Time;
+        Console.WriteLine($"Data i czas: {Input.Date} {Input.Time}");
+    }
+
+    private async Task ScheduleAppointment()
+    {
+        Console.WriteLine($"Selected date and time: {date} {time}");
+        try
+        {
+            var selectedAppointment = appointments.FirstOrDefault(a => a.Date == Input.Date && a.Time == Input.Time);
+
+            if (selectedAppointment != null)
+            {
+                selectedAppointment.Status = "Scheduled";
+                selectedAppointment.PatientId = Input.PatientId;
+
+                await appointmentService.UpdateAppointment(selectedAppointment);
+
+                NavigationManager.NavigateTo("/Patient/Specialists");
+            }
+            else
+            {
+                Console.WriteLine("Selected appointment not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error scheduling appointment: {ex.Message}");
+        }
+    }
+    public void HandleDateChange(ChangeEventArgs e)
+    {
+        Console.WriteLine($" Costam e={e}");
+        Input.Date = e.Value?.ToString();
+    }
+
+    public class InputModel
+    {
+        public string Date { get; set; } = string.Empty;
+        public string Time { get; set; } = string.Empty;
+        public string? PatientId { get; set; }
+        
+        void HandleDateChange(ChangeEventArgs e)
+        {
+            Date = e.Value?.ToString();
+        }
+    }
+}

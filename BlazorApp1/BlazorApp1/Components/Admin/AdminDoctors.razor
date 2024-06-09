@@ -24,7 +24,7 @@ else
     @* <button @onclick="AddDoctor" class="btn btn-primary">Add Doctor</button> *@
     <h3>Add Doctor</h3>
 
-    <EditForm Model="doctor" OnSubmit="HandleSubmit">
+    <EditForm Model="doctor" FormName="AddDoctor" OnSubmit="HandleSubmit">
         <div>
             <label for="name">First Name</label>
             <InputText id="name" @bind-Value="doctor.Name" class="form-control" />
